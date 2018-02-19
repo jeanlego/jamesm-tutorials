@@ -11,18 +11,12 @@
 #include "vmm.h"
 #include "heap.h"
 #include "thread.h"
-#include "lock.h"
-
-
-spinlock_t lock = SPINLOCK_UNLOCKED;
 
 int fn(void *arg)
 {
-  spinlock_lock(&lock);
   for(int i = 0; i < 2; i++)
     monitor_write("a");
   monitor_write("\n ----- exit child ------- \n");
-  spinlock_unlock(&lock);
   return 1;
 }
 
@@ -34,20 +28,14 @@ int kernel_main(multiboot_t *mboot_ptr)
 
   monitor_write("Hello, world!\n");
 
-
-
   init_gdt ();
   init_idt ();
-
-
 
   init_timer (20);
 
 
   init_pmm (mboot_ptr->mem_upper);
   init_vmm ();
-
-
   init_heap ();
 
 
@@ -73,18 +61,19 @@ int kernel_main(multiboot_t *mboot_ptr)
     // so we must add sizeof (uint32_t).
     i += me->size + sizeof (uint32_t);
   }
+  
   asm volatile ("sti");
-  init_scheduler (init_threading ());
+  
+  thread_t *kernel_thread = init_threading();
+  init_scheduler (kernel_thread);
 
 
 
   uint32_t *stack = kmalloc (0x400) + 0x3F0;
 
   thread_t *t = create_thread(&fn, (void*)0x567, stack);
-  spinlock_lock(&lock);
   for(int i = 0; i < 2; i++)
     monitor_write("b");
-  spinlock_unlock(&lock);
   monitor_write("\n ----- exit parrent ------- \n");
   return 0;
 
