@@ -51,7 +51,7 @@ void spinlock_unlock (spinlock_t *lock)
 // void semaphore_destroy (semaphore_t *sem)
 // {
 //   if(sem->queue)
-//     panic("Trying to destroy active semaphore!");
+//     PANIC("Trying to destroy active semaphore!");
 //   else
 //     kfree(sem);
 // }

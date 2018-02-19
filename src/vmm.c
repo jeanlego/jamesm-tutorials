@@ -115,14 +115,27 @@ char get_mapping (uint32_t va, uint32_t *pa)
   }
 }
 
-void page_fault (registers_t *regs)
+void page_fault(registers_t *regs)
 {
-  uint32_t cr2;
-  asm volatile ("mov %%cr2, %0" : "=r" (cr2));
+    // Output an error message.
+    monitor_write("Page fault! ( ");
+    
+    // The faulting address is stored in the CR2 register.
+    uint32_t faulting_address;
+    asm volatile("mov %%cr2, %0" : "=r" (faulting_address));
 
-  printk ("Page fault at 0x%x, faulting address 0x%x\n", regs->eip, cr2);
-  printk ("Error code: %x\n", regs->err_code);
-  panic ("");
-  for (;;) ;
+    monitor_write((regs->err_code & 0x1) ? ""            :"present ");
+    monitor_write((regs->err_code & 0x2) ? "read-only "  :"");
+    monitor_write((regs->err_code & 0x4) ? "user-mode "  :"");
+    monitor_write((regs->err_code & 0x8) ? "reserved "   :"");
+    monitor_write((regs->err_code & 0x10)? "idied "      :"");
+
+    monitor_write(") at 0x");
+    monitor_write_hex(faulting_address);
+    monitor_write(" - EIP: ");
+    monitor_write_hex(regs->eip);
+    monitor_write("\n");
+    
+    PANIC("Page fault");
 }
 

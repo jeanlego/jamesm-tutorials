@@ -3,36 +3,15 @@
 
 #include "multiboot.h"
 #include "common.h"
-
-
 #include "monitor.h"
-
-
 #include "gdt.h"
 #include "idt.h"
-
-
 #include "timer.h"
-
-
-
 #include "pmm.h"
 #include "vmm.h"
-
-
 #include "heap.h"
-
-
 #include "thread.h"
-
-
 #include "lock.h"
-
-
-
-
-elf_t kernel_elf;
-
 
 
 spinlock_t lock = SPINLOCK_UNLOCKED;
@@ -41,8 +20,8 @@ int fn(void *arg)
 {
   spinlock_lock(&lock);
   for(int i = 0; i < 2; i++)
-    printk("a");
-  printk("\n ----- exit child ------- \n");
+    monitor_write("a");
+  monitor_write("\n ----- exit child ------- \n");
   spinlock_unlock(&lock);
   return 1;
 }
@@ -104,9 +83,9 @@ int kernel_main(multiboot_t *mboot_ptr)
   thread_t *t = create_thread(&fn, (void*)0x567, stack);
   spinlock_lock(&lock);
   for(int i = 0; i < 2; i++)
-    printk("b");
+    monitor_write("b");
   spinlock_unlock(&lock);
-  printk("\n ----- exit parrent ------- \n");
+  monitor_write("\n ----- exit parrent ------- \n");
   return 0;
 
 }

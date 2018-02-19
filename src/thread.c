@@ -45,8 +45,9 @@ void thread_exit ()
 {
   register uint32_t val asm ("eax");
 
-  printk ("Thread exited with value %d\n", val);
-
+  monitor_write ("Thread exited with value ");
+  monitor_write_dec(val);
+  monitor_write("\n");
   for (;;) ;
 }
 

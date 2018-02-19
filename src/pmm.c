@@ -25,7 +25,7 @@ uint32_t pmm_alloc_page ()
   {
     // Quick sanity check.
     if (pmm_stack_loc == PMM_STACK_ADDR)
-      panic ("Error:out of memory.");
+      PANIC("Error:out of memory.");
 
     // Pop off the stack.
     pmm_stack_loc -= sizeof (uint32_t);

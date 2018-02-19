@@ -1,92 +1,71 @@
-src/printk.c: In function ‘printk’:
-src/printk.c:19:3: warning: implicit declaration of function ‘monitor_write’; did you mean ‘__builtin_fwrite’? [-Wimplicit-function-declaration]
-   monitor_write (buf);
-   ^~~~~~~~~~~~~
-   __builtin_fwrite
-src/common.c: In function ‘strcat’:
-src/common.c:68:18: warning: operation on ‘dest’ may be undefined [-Wsequence-point]
-     *dest = *dest++;
-              ~~~~^~
-src/common.c: In function ‘strcpy’:
-src/common.c:61:1: warning: control reaches end of non-void function [-Wreturn-type]
- }
- ^
-src/elf.c: In function ‘elf_from_multiboot’:
-src/elf.c:16:17: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
-   for (i = 0; i < mb->num; i++)
-                 ^
-src/elf.c:19:10: warning: implicit declaration of function ‘strcmp’ [-Wimplicit-function-declaration]
-     if (!strcmp (name, ".strtab"))
-          ^~~~~~
-src/elf.c: In function ‘elf_lookup_symbol’:
-src/elf.c:37:17: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
-   for (i = 0; i < (elf->symtabsz/sizeof (elf_symbol_t)); i++)
-                 ^
-src/elf.c:49:1: warning: control reaches end of non-void function [-Wreturn-type]
- }
- ^
 src/vmm.c: In function ‘init_vmm’:
-src/vmm.c:32:3: warning: implicit declaration of function ‘memset’ [-Wimplicit-function-declaration]
-   memset (pd, 0, 0x1000);
-   ^~~~~~
+src/vmm.c:63:11: warning: passing argument 1 of ‘memset’ makes pointer from integer without a cast [-Wint-conversion]
+   memset (page_tables[pt_idx*1024], 0, 0x1000);
+           ^~~~~~~~~~~
+In file included from include/vmm.h:10:0,
+                 from src/vmm.c:7:
+include/common.h:36:15: note: expected ‘void *’ but argument is of type ‘uint32_t {aka unsigned int}’
+ extern void * memset(void * dest, int c, size_t n);
+               ^~~~~~
+src/vmm.c: In function ‘map’:
+src/vmm.c:86:13: warning: passing argument 1 of ‘memset’ makes pointer from integer without a cast [-Wint-conversion]
+     memset (page_tables[pt_idx*1024], 0, 0x1000);
+             ^~~~~~~~~~~
+In file included from include/vmm.h:10:0,
+                 from src/vmm.c:7:
+include/common.h:36:15: note: expected ‘void *’ but argument is of type ‘uint32_t {aka unsigned int}’
+ extern void * memset(void * dest, int c, size_t n);
+               ^~~~~~
+src/vmm.c: In function ‘page_fault’:
+src/vmm.c:121:5: warning: implicit declaration of function ‘monitor_write’ [-Wimplicit-function-declaration]
+     monitor_write("Page fault! ( ");
+     ^~~~~~~~~~~~~
+src/vmm.c:134:5: warning: implicit declaration of function ‘monitor_write_hex’ [-Wimplicit-function-declaration]
+     monitor_write_hex(faulting_address);
+     ^~~~~~~~~~~~~~~~~
 src/vmm.c: In function ‘get_mapping’:
 src/vmm.c:116:1: warning: control reaches end of non-void function [-Wreturn-type]
  }
  ^
 src/main.c: In function ‘fn’:
-src/main.c:44:14: warning: unused parameter ‘arg’ [-Wunused-parameter]
+src/main.c:19:14: warning: unused parameter ‘arg’ [-Wunused-parameter]
  int fn(void *arg)
               ^~~
 src/main.c: In function ‘kernel_main’:
-src/main.c:113:13: warning: unused variable ‘t’ [-Wunused-variable]
+src/main.c:83:13: warning: unused variable ‘t’ [-Wunused-variable]
    thread_t *t = create_thread(&fn, (void*)0x567, stack);
              ^
-src/idt.c: In function ‘init_idt’:
-src/idt.c:30:3: warning: implicit declaration of function ‘memset’ [-Wimplicit-function-declaration]
-   memset (&interrupt_handlers, 0, sizeof (interrupt_handler_t) * 256);
-   ^~~~~~
-src/keyboard.c:160:22: warning: multi-character character constant [-Wmultichar]
-     0, 27, '!', '@', '£', '$', '%', '^', '&', '*', '(', ')', '_', '+', '\b',
-                      ^~~~
-src/keyboard.c:160:22: warning: large integer implicitly truncated to unsigned type [-Woverflow]
-src/keyboard.c: In function ‘keyboard_handler’:
-src/keyboard.c:250:36: warning: unused parameter ‘regs’ [-Wunused-parameter]
- void keyboard_handler(registers_t *regs)
-                                    ^~~~
-src/vsprintf.c: In function ‘number’:
-src/vsprintf.c:53:5: warning: suggest explicit braces to avoid ambiguous ‘else’ [-Wdangling-else]
-  if (type&SPECIAL)
-     ^
-src/vsprintf.c:68:5: warning: suggest explicit braces to avoid ambiguous ‘else’ [-Wdangling-else]
-  if (type&SPECIAL)
-     ^
-src/vsprintf.c: In function ‘vsprintf’:
-src/vsprintf.c:166:10: warning: implicit declaration of function ‘strlen’ [-Wimplicit-function-declaration]
-    len = strlen(s);
-          ^~~~~~
-src/vsprintf.c:100:6: warning: variable ‘qualifier’ set but not used [-Wunused-but-set-variable]
-  int qualifier;  /* 'h', 'l', or 'L' for integer fields */
-      ^~~~~~~~~
-src/vsprintf.c:197:10: warning: this statement may fall through [-Wimplicit-fallthrough=]
-    flags |= SMALL;
-          ^
-src/vsprintf.c:198:3: note: here
-   case 'X':
-   ^~~~
-src/vsprintf.c:205:10: warning: this statement may fall through [-Wimplicit-fallthrough=]
-    flags |= SIGN;
-          ^
-src/vsprintf.c:206:3: note: here
-   case 'u':
-   ^~~~
+src/idt.c: In function ‘idt_handler’:
+src/idt.c:132:5: warning: implicit declaration of function ‘monitor_write’ [-Wimplicit-function-declaration]
+     monitor_write("unhandled interrupt: ");
+     ^~~~~~~~~~~~~
+src/idt.c:133:5: warning: implicit declaration of function ‘monitor_write_dec’ [-Wimplicit-function-declaration]
+     monitor_write_dec(regs->int_no);
+     ^~~~~~~~~~~~~~~~~
+src/idt.c:134:5: warning: implicit declaration of function ‘monitor_put’ [-Wimplicit-function-declaration]
+     monitor_put('\n');
+     ^~~~~~~~~~~
+src/thread.c: In function ‘init_threading’:
+src/thread.c:18:22: warning: implicit declaration of function ‘kmalloc’ [-Wimplicit-function-declaration]
+   thread_t *thread = kmalloc (sizeof (thread_t));
+                      ^~~~~~~
+src/thread.c:18:22: warning: initialization makes pointer from integer without a cast [-Wint-conversion]
 src/thread.c: In function ‘create_thread’:
-src/thread.c:29:3: warning: implicit declaration of function ‘memset’ [-Wimplicit-function-declaration]
-   memset (thread, 0, sizeof (thread_t));
-   ^~~~~~
+src/thread.c:28:22: warning: initialization makes pointer from integer without a cast [-Wint-conversion]
+   thread_t *thread = kmalloc (sizeof (thread_t));
+                      ^~~~~~~
 src/thread.c:39:3: warning: implicit declaration of function ‘thread_is_ready’; did you mean ‘thread_exit’? [-Wimplicit-function-declaration]
    thread_is_ready(thread);
    ^~~~~~~~~~~~~~~
    thread_exit
+src/thread.c: In function ‘thread_exit’:
+src/thread.c:48:3: warning: implicit declaration of function ‘monitor_write’; did you mean ‘__builtin_fwrite’? [-Wimplicit-function-declaration]
+   monitor_write ("Thread exited with value ");
+   ^~~~~~~~~~~~~
+   __builtin_fwrite
+src/thread.c:49:3: warning: implicit declaration of function ‘monitor_write_dec’ [-Wimplicit-function-declaration]
+   monitor_write_dec(val);
+   ^~~~~~~~~~~~~~~~~
 src/timer.c: In function ‘timer_callback’:
 src/timer.c:16:42: warning: unused parameter ‘regs’ [-Wunused-parameter]
  static void timer_callback (registers_t *regs)
