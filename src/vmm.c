@@ -7,6 +7,8 @@
 #include "vmm.h"
 #include "pmm.h"
 #include "idt.h"
+#include "common.h"
+#include "monitor.h"
 
 uint32_t *page_directory = (uint32_t *)PAGE_DIR_VIRTUAL_ADDR;
 uint32_t *page_tables = (uint32_t *)PAGE_TABLE_VIRTUAL_ADDR;
@@ -105,14 +107,13 @@ char get_mapping (uint32_t va, uint32_t *pa)
   uint32_t pt_idx = PAGE_DIR_IDX(virtual_page);
 
   // Find the appropriate page table for 'va'.
-  if (page_directory[pt_idx] == 0)
+  if (!page_directory[pt_idx] || !page_tables[virtual_page])
     return 0;
 
-  if (page_tables[virtual_page] != 0)
-  {
-    if (pa) *pa = page_tables[virtual_page] & PAGE_MASK;
-    return 1;
-  }
+  if (pa) 
+    *pa = page_tables[virtual_page] & PAGE_MASK;
+    
+  return 1;
 }
 
 void page_fault(registers_t *regs)

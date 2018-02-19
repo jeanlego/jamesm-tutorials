@@ -5,6 +5,9 @@
 //
 
 #include "thread.h"
+#include "heap.h"
+#include "monitor.h"
+#include "scheduler.h"
 
 thread_t *current_thread;
 uint32_t next_tid = 0;

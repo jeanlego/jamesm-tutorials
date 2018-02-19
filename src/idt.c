@@ -8,6 +8,7 @@
 
 #include "common.h"
 #include "idt.h"
+#include "monitor.h"
 
 // Lets us access our ASM functions from our C code.
 extern void idt_flush(uint32_t);

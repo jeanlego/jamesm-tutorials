@@ -7,6 +7,7 @@
 #include "pmm.h"
 #include "vmm.h"
 #include "common.h"
+#include "monitor.h"
 
 uint32_t pmm_stack_loc = PMM_STACK_ADDR;
 uint32_t pmm_stack_max = PMM_STACK_ADDR;

@@ -52,7 +52,7 @@ void * memcpy(void * restrict dest, const void * restrict src, size_t n) {
 	return dest;
 }
 
-void * memset(void * dest, int c, size_t n) {
+void * checked_memset(void * dest, int c, size_t n) {
 	asm volatile("cld; rep stosb"
 	             : "=c"((int){0})
 	             : "D"(dest), "a"(c), "c"(n)
