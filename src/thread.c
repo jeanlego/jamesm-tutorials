@@ -1,4 +1,4 @@
-#if CHAPTER >= 9
+
 // 
 // thread.c -- Defines functions and structures for multithreading.
 //             Written for JamesM's kernel development tutorials.
@@ -49,4 +49,4 @@ void thread_exit ()
 
   for (;;) ;
 }
-#endif // CHAPTER >= 9
+

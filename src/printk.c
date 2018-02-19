@@ -1,4 +1,4 @@
-#if CHAPTER >= 3
+
 #include "printk.h"
 #include "vsprintf.h"
 #include <stdarg.h>
@@ -18,4 +18,4 @@ void printk (const char *fmt, ...)
 
  	monitor_write (buf);
 }
-#endif
+

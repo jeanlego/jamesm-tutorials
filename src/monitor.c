@@ -1,4 +1,4 @@
-#if CHAPTER >= 3
+
 // monitor.c -- Defines functions for writing to the monitor.
 //              heavily based on Bran's kernel development tutorials,
 //              but rewritten for JamesM's kernel tutorials.
@@ -175,4 +175,4 @@ void monitor_write_dec(uint32_t n)
     c2[i--] = c[j++];
   monitor_write(c2);
 }
-#endif
+

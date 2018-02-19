@@ -1,4 +1,4 @@
-#if CHAPTER >= 5
+
 //
 // timer.c -- Initialises the PIT, and handles clock updates.
 //            Written for JamesM's kernel development tutorials.
@@ -7,23 +7,16 @@
 #include "common.h"
 #include "timer.h"
 #include "idt.h"
-#if CHAPTER >= 10
+
 #include "scheduler.h"
-#endif
+
 
 uint32_t tick = 0;
 
 static void timer_callback (registers_t *regs)
 {
   tick++;
-#if CHAPTER >= 9
   schedule ();
-#endif // CHAPTER >= 9
-#if CHAPTER == 5
-  monitor_write("Tick: ");
-  monitor_write_dec(tick);
-  monitor_write("\n");
-#endif // CHAPTER == 5
 }
 
 void init_timer (uint32_t frequency)
@@ -47,4 +40,4 @@ void init_timer (uint32_t frequency)
   outb(0x40, l);
   outb(0x40, h);
 }
-#endif // CHAPTER >= 5
+

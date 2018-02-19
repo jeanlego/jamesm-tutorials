@@ -1,4 +1,4 @@
-#if CHAPTER >= 11
+
 //
 // keyboard.c -- Defines the functions related to the keyboard driver.
 //          Written for JamesM's kernel development tutorials.
@@ -300,4 +300,4 @@ void keyboard_handler(registers_t *regs)
     }
   }
 }
-#endif
+

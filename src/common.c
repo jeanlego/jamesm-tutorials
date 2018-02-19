@@ -1,4 +1,4 @@
-#if CHAPTER >= 3
+
 // common.c -- Defines some global functions.
 //             From JamesM's kernel development tutorials.
 
@@ -80,5 +80,5 @@ int strlen(char *src)
     i++;
   return i;
 }
-#endif
+
 

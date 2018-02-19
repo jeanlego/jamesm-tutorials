@@ -1,4 +1,4 @@
-#if CHAPTER >= 10
+
 //
 // lock.c -- Defines functions and structures for the locking mechanism.
 //           Written for JamesM's kernel development tutorials.
@@ -100,4 +100,3 @@ void spinlock_unlock (spinlock_t *lock)
 //   spinlock_unlock (&sem->lock);
 // }
 
-#endif

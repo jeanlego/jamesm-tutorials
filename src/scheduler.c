@@ -1,4 +1,4 @@
-#if CHAPTER >= 9
+
 //
 // scheduler.c -- Defines functions and structures for preempting threads.
 //                Written for JamesM's kernel development tutorials.
@@ -85,4 +85,4 @@ void schedule ()
   // Switch to the new thread.
   switch_thread (new_thread);
 }
-#endif // CHAPTER >= 9
+
